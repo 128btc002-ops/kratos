@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KRATOS</title>
+  <style>
+    body{background:#0A0A0B;color:#FFFFFF;font-family:Inter,sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;gap:1rem}
+    .logo{font-size:8rem;color:#00F5D4;margin-bottom:1rem}
+    .btn{background:#00F5D4;color:#0A0A0B;padding:.75rem 1.5rem;border:none;border-radius:4px;font-weight:bold;cursor:pointer}
+    #result{width:100%;max-width:3xl;height:24rem;margin-top:1.5rem;border-radius:4px}
+  </style>
+</head>
+<body>
+  <div class="logo">Κ</div>
+  <h1>KRATOS is coming</h1>
+  <p>Create anything. Simply describe it.</p>
+  <input id="desc" type="text" placeholder="Describe your project..." style="padding:.5rem 1rem;border-radius:4px;width:18rem;background:#111;color:#fff;border:none;" />
+  <button class="btn" onclick="generate()">Generate</button>
+  <iframe id="result" class="hidden"></iframe>
+
+  <script>
+    async function generate() {
+      const desc = document.getElementById('desc').value;
+      if (!desc) return alert('Please enter a description');
+      const res = await fetch('https://kratos-hjs8.onrender.com/projects/quick?description=' + encodeURIComponent(desc));
+      const data = await res.json();
+      const iframe = document.getElementById('result');
+      iframe.srcdoc = data.html;
+      iframe.classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
