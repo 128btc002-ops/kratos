@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KRATOS</title>
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body class="bg-kratos-bg text-kratos-white font-sans flex items-center justify-center h-screen flex-col gap-4">
+  <div class="text-8xl text-kratos-accent">Κ</div>
+  <h1 class="text-4xl font-bold">KRATOS is coming</h1>
+  <p class="text-lg">Create anything. Simply describe it.</p>
+
+  <!-- CHAMP DE TEXTE -->
+  <input id="desc" type="text" placeholder="Describe your project..." class="px-4 py-2 rounded bg-gray-800 text-white w-72" />
+
+  <!-- BOUTON -->
+  <button onclick="generate()" class="bg-kratos-accent text-kratos-bg px-6 py-3 rounded font-bold hover:opacity-90 transition">Generate</button>
+
+  <!-- ZONE RÉSULTAT -->
+  <iframe id="result" class="w-full max-w-3xl h-96 mt-6 rounded hidden"></iframe>
+
+  <script>
+    async function generate() {
+      const desc = document.getElementById('desc').value;
+      if (!desc) return alert('Please enter a description');
+      const res = await fetch('http://localhost:8000/projects/quick?description=' + encodeURIComponent(desc));
+      const data = await res.json();
+      const iframe = document.getElementById('result');
+      iframe.srcdoc = data.html;
+      iframe.classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
